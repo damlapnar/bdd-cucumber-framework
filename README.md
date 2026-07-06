@@ -3,7 +3,8 @@
 ![Cucumber](https://img.shields.io/badge/Cucumber-23D96C?style=flat-square&logo=cucumber&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
 ![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=flat-square&logo=selenium&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white)
+[![CI](https://github.com/damlapnar/bdd-cucumber-framework/actions/workflows/bdd-tests.yml/badge.svg)](https://github.com/damlapnar/bdd-cucumber-framework/actions/workflows/bdd-tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 BDD test framework using Cucumber 7, Selenium, and Gherkin. Human-readable test scenarios bridge the gap between business stakeholders and engineering teams.
 
