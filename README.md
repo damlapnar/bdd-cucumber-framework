@@ -20,15 +20,17 @@ BDD test framework using Cucumber 7, Selenium, and Gherkin. Human-readable test 
 
 ```
 bdd-cucumber-framework/
-├── src/
-│   ├── main/java/com/automation/
-│   │   ├── steps/       # Step definitions
+├── src/test/
+│   ├── java/com/automation/
+│   │   ├── steps/       # Step definitions (LoginSteps, ShoppingSteps)
 │   │   ├── pages/       # Page Object classes
 │   │   ├── hooks/       # Before/After hooks
 │   │   └── runner/      # JUnit test runner
-│   └── test/resources/
-│       └── features/    # Gherkin .feature files
+│   └── resources/
+│       └── features/    # Gherkin .feature files (login, shopping)
 ```
+
+All of the above live under `src/test/java`, not `src/main/java` — Maven Surefire's default test discovery only scans compiled classes under `target/test-classes`, so the JUnit `TestRunner` (and everything it depends on) has to be a test source, not a main one.
 
 ## Running Tests
 
@@ -37,7 +39,7 @@ bdd-cucumber-framework/
 mvn test
 
 # Specific tag
-mvn test -Dcucumber.filter.tags="@smoke"
+mvn test -Dcucumber.filter.tags="not @skip"
 
 # Headless
 mvn test -Dheadless=true

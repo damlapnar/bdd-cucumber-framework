@@ -12,7 +12,7 @@ Thank you for your interest in contributing!
 ```bash
 git clone https://github.com/damlapinar/bdd-cucumber-framework.git
 cd bdd-cucumber-framework
-mvn test -Dcucumber.filter.tags=@smoke
+mvn test -Dheadless=true
 ```
 
 ## Running Tests
@@ -26,7 +26,7 @@ mvn test -Dheadless=true
 
 - Follow the Page Object Model pattern for all new page interactions
 - Keep step definitions thin — business logic belongs in page objects
-- Add `@smoke` tag to critical path tests
+- New runner/steps/hooks/pages classes belong under `src/test/java`, not `src/main/java` — Surefire only auto-discovers the JUnit runner from `target/test-classes`
 - Ensure tests are independent and idempotent
 
 ## Pull Request Process
