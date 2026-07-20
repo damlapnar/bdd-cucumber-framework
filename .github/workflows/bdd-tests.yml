@@ -17,6 +17,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+      - name: Checkstyle
+        run: mvn checkstyle:check
+
       - name: Run BDD tests
         run: mvn test -Dheadless=true
       - name: Upload Cucumber report

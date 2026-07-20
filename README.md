@@ -14,6 +14,7 @@ BDD test framework using Cucumber 7, Selenium, and Gherkin. Human-readable test 
 - **Scenario Outline** — data-driven tests with Examples tables
 - **Hooks** — `@Before`/`@After` with screenshot capture on failure
 - **Allure Reports** — rich reporting with step-by-step breakdown
+- **Static Analysis** — curated Checkstyle ruleset (`config/checkstyle.xml`), run in the Maven `verify` phase
 - **CI/CD** — GitHub Actions pipeline
 
 ## Project Structure

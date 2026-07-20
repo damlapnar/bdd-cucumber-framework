@@ -2,7 +2,6 @@ package com.automation.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -33,28 +32,27 @@ public class CheckoutPage {
 
     // sendKeys() on these React-controlled inputs is flaky under headless
     // Chrome: click()+clear()+sendKeys() sometimes leaves the field empty
-    // with no exception raised (confirmed by reading the field's live DOM
-    // property immediately after typing - not just visually from a
-    // screenshot, which can catch a field that "caught up" later). Verifying
-    // the value actually landed - and retrying if not - is what makes this
-    // deterministic instead of occasionally flaky.
+    // with no exception raised, confirmed by reading the field's live DOM
+    // property immediately after typing (not just visually from a
+    // screenshot, which can catch a value that "caught up" later). A
+    // click()+clear()+sendKeys()+retry loop still isn't fully reliable -
+    // even 3 attempts occasionally all miss. Setting the value through
+    // the input's native property setter and dispatching a real 'input'
+    // event bypasses whatever timing sendKeys is racing against entirely,
+    // since it updates React's state directly rather than simulating
+    // keystrokes for it to (maybe) pick up.
+    private static final String SET_REACT_INPUT_VALUE =
+            "const el = arguments[0];"
+            + "const text = arguments[1];"
+            + "const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;"
+            + "setter.call(el, text);"
+            + "el.dispatchEvent(new Event('input', { bubbles: true }));";
+
     private void typeReliably(By locator, String text) {
-        for (int attempt = 1; attempt <= 3; attempt++) {
-            WebElement element = driver.findElement(locator);
-            element.click();
-            element.clear();
-            element.sendKeys(text);
-            try {
-                new WebDriverWait(driver, Duration.ofSeconds(3))
-                        .until(d -> text.equals(driver.findElement(locator).getDomProperty("value")));
-                return;
-            } catch (TimeoutException e) {
-                if (attempt == 3) {
-                    throw new IllegalStateException(
-                            "Could not type '" + text + "' into " + locator + " after 3 attempts", e);
-                }
-            }
-        }
+        WebElement element = driver.findElement(locator);
+        element.click();
+        ((JavascriptExecutor) driver).executeScript(SET_REACT_INPUT_VALUE, element, text);
+        wait.until(d -> text.equals(element.getDomProperty("value")));
     }
 
     public void clickContinue() {
