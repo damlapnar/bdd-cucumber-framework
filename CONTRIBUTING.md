@@ -10,7 +10,7 @@ Thank you for your interest in contributing!
 ## Getting Started
 
 ```bash
-git clone https://github.com/damlapinar/bdd-cucumber-framework.git
+git clone https://github.com/damlapnar/bdd-cucumber-framework.git
 cd bdd-cucumber-framework
 mvn test -Dheadless=true
 ```
